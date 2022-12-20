@@ -9,11 +9,11 @@
 #include <stdlib.h>
 #include <netdb.h>
 
-#define CHARMAX 255 // Dimensione massima delle stringhe in entrata e uscita
+#define CHARMAX 255
 #define PORT 5000
 
 #include <string.h>
-#include<ctype.h>
+#include <ctype.h>
 
 char *strupr(char *str)
 {
@@ -47,7 +47,7 @@ int main() {
 
     int ServerSock;
     struct sockaddr_in ClientAddr;
-    struct	hostent	*host;
+    struct hostent *host;
     int cliAddrLen;
     char buffer[CHARMAX];
     int recvMsgSize;
@@ -80,11 +80,11 @@ int main() {
         // Receive welcome message from Client
         recvMsgSize = recvfrom(ServerSock, buffer, CHARMAX, 0, (struct sockaddr*)&ClientAddr, &cliAddrLen);
         ip = inet_ntoa(ClientAddr.sin_addr);
-        addr.s_addr	= inet_addr(ip);
-        host = gethostbyaddr((char	*) &addr, 4, AF_INET);
+        addr.s_addr = inet_addr(ip);
+        host = gethostbyaddr((char*) &addr, 4, AF_INET);
         canonical_name = host->h_name;
         buffer[recvMsgSize] = '\0';
-        printf("MSG ricevuto dal client '%s': %s\n", canonical_name, buffer);//inet_ntoa(ClientAddr.sin_addr));
+        printf("MSG ricevuto dal client '%s': %s\n", canonical_name, buffer);
 
         // Send OK message to Client
         if (sendto(ServerSock, "OK", 2, 0, (struct sockaddr *)&ClientAddr, sizeof(ClientAddr)) != 2) {
